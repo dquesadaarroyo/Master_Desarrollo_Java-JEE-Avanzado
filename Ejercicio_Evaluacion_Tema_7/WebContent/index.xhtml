@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>Datos de la persona:</title>
+</h:head>
+<h:body>
+
+	<!-- Formulario en el que introducimos los datos de una persona para mandar un mensaje a Inglaterra y New York.
+		 Enviaremos un mensaje desde el managed bean. Se configuran los archivos
+		 web.xml y faces-config.xml para configurar la inyección de dependencias en un managed bean. -->
+	<h:form id="formPersonas">
+		<h:outputLabel value="Nombre: " for="nombre" />
+		<h:inputText id="nombre" value="#{jmsController.miPersona.nombre}" />
+		<br></br>
+		<h:outputLabel value="Primer apellido: " for="apellido1" />
+		<h:inputText id="apellido1" value="#{jmsController.miPersona.apellido1}" />
+		<br></br>
+		<h:outputLabel value="Segundo Apellido: " for="apellido2" />
+		<h:inputText id="apellido2" value="#{jmsController.miPersona.apellido2}" />
+		<br></br>
+		<h:outputLabel value="Teléfono: " for="telefono" />
+		<h:inputText id="telefono" value="#{jmsController.miPersona.telefono}" />
+		<br></br>
+		<h:outputLabel value="Notas: " for="notas" />
+		<h:inputText id="notas" value="#{jmsController.miPersona.notas}" />
+		<br></br>
+		
+		<h:commandButton action="#{jmsController.enviarMensaje()}" value="Enviar mensaje" />
+	</h:form>
+</h:body>
+</html>

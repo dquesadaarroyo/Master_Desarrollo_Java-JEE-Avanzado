@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:webflow-config="http://www.springframework.org/schema/webflow-config"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.3.xsd">
+	
+	<mvc:annotation-driven />
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".xhtml" />
+    </bean>
+    
+	<bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate" />
+        
+	<bean id="connectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiTemplate" ref="jndiTemplate" />
+		<property name="jndiName" value="ConnectionFactory" />
+	</bean>
+ 	
+	<bean id="destinoJMS" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiTemplate" ref="jndiTemplate" />
+		<property name="jndiName" value="topic/test"/>
+	</bean>
+	
+ 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+ 		<property name="connectionFactory" ref="connectionFactory" />
+ 		<property name="defaultDestination" ref="destinoJMS" />
+ 	</bean>
+ 	
+ 	<bean id="jmsController" class="app.controllers.JMSController">
+        <property name="jmsTemplate" ref="jmsTemplate" />
+        <property name="destino" ref="destinoJMS" />
+    </bean>
+</beans>
