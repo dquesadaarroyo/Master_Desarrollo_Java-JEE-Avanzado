@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- ******************* CONFIGURACION GENERAL ******************* -->
+	
+	<bean id="miDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost/LIBRERIA" />
+		<property name="username" value="curso" />
+		<property name="password" value="curso" />
+	</bean>
+	
+	<bean id="miPlantilla" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="miDataSource" />
+	</bean>
+	
+	<bean id="miMapeador" class="app.persistencia.Mapeador" />
+	
+	<!-- ******************* CONFIGURACION DE BEANS ******************* -->
+	
+	<!-- Declaramos la clase Libro -->
+	<bean id="miLibro1" class="app.modelo.Libro">
+		<constructor-arg name="titulo" value="ejemplo1"/>
+		<constructor-arg name="autor" value="autor 1"/>
+		<constructor-arg name="editorial" value="editorial1"/>
+		<constructor-arg name="isbn" value="1"/>
+		<constructor-arg name="publicacion" value="111"/>
+		<constructor-arg name="precio" value="111"/>
+		<constructor-arg name="descripcion" value="111"/>
+	</bean>
+	
+	<!-- Declaramos la clase Libro -->
+	<bean id="miLibro2" class="app.modelo.Libro">
+		<constructor-arg name="titulo" value="ejemplo2"/>
+		<constructor-arg name="autor" value="autor 2"/>
+		<constructor-arg name="editorial" value="editorial 2"/>
+		<constructor-arg name="isbn" value="2"/>
+		<constructor-arg name="publicacion" value="222"/>
+		<constructor-arg name="precio" value="222"/>
+		<constructor-arg name="descripcion" value="222"/>
+	</bean>
+	
+	<!-- Declaramos la clase Libro -->
+	<bean id="miLibro3" class="app.modelo.Libro">
+		<constructor-arg name="titulo" value="ejemplo3"/>
+		<constructor-arg name="autor" value="autor 3"/>
+		<constructor-arg name="editorial" value="editorial 3"/>
+		<constructor-arg name="isbn" value="3"/>
+		<constructor-arg name="publicacion" value="222"/>
+		<constructor-arg name="precio" value="333"/>
+		<constructor-arg name="descripcion" value="333"/>
+	</bean>
+	
+	<!-- Declaramos la clase Libro -->
+	<bean id="miLibro4" class="app.modelo.Libro">
+		<constructor-arg name="titulo" value="ejemplo4"/>
+		<constructor-arg name="autor" value="autor 4"/>
+		<constructor-arg name="editorial" value="editorial 4"/>
+		<constructor-arg name="isbn" value="4"/>
+		<constructor-arg name="publicacion" value="444"/>
+		<constructor-arg name="precio" value="444"/>
+		<constructor-arg name="descripcion" value="444"/>
+	</bean>
+	
+	<!-- Declaramos la clase Libro -->
+	<bean id="miLibro5" class="app.modelo.Libro">
+		<constructor-arg name="titulo" value="ejemplo5"/>
+		<constructor-arg name="autor" value="autor 5"/>
+		<constructor-arg name="editorial" value="editorial 5"/>
+		<constructor-arg name="isbn" value="5"/>
+		<constructor-arg name="publicacion" value="555"/>
+		<constructor-arg name="precio" value="555"/>
+		<constructor-arg name="descripcion" value="555"/>
+	</bean>
+	<!-- Declaramos el bean de la interface de negocio, con la que invocaremos al DAO -->
+	<bean id="gestionLibreria" class="app.negocio.GestionLibreria">
+		<property name="miDao" ref="librosDao"/>
+	</bean>
+	
+	<!-- Declaramos beans de la capa DAO con la que atacamos  la base de datos -->
+	<bean id="librosDao" class="app.persistencia.LibrosDAO">
+		<property name="plantilla" ref="miPlantilla"/>
+		<property name="mapeadorLibro" ref="miMapeador" />
+	</bean>
+	
+	<!-- Declaramos la excepcion personalizada -->
+	<bean id="libroNoEncontradoException" class="app.excepciones.LibroNoEncontradoException" />
+	
+	<!-- Declaramos el bean de la clase Interceptor que utilizaremos con AOP -->
+	<bean id="miInterceptor" class="app.utilidades.Interceptor"/>
+	
+	
+	<!-- ******************* CONFIGURACION DE ASPECTOS ******************* -->
+	
+    <aop:config>
+			<aop:pointcut id="interceptaAltaPC" 
+						  expression="execution(public boolean app.persistencia.LibrosDAO.altaLibro(..))" /> 
+			
+			<aop:aspect ref="miInterceptor">
+				<aop:after-returning pointcut-ref="interceptaAltaPC" 
+									 method="interceptarAltaLibro" 
+									 returning="result" /> 
+			</aop:aspect>
+	</aop:config>
+	
+</beans>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Inject"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Spring AOP 7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Spring4_release"/>
+	<classpathentry kind="lib" path="/Users/danielquesadaarroyo/Documents/Documentacion_MASTER_JAVA/Software_y_Librerias/Librerias Eclipse/Tema 1/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 7 [1.7.0_60]"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
