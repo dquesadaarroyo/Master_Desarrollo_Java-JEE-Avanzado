@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 20-jul-2014 21:06:03 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="app.modelo.Direccion" table="DIRECCION">
+	    
+	    <id name="id" column="ID_DIRECCION" type="long" length="5"> 
+	    	<generator class="native" />
+	    </id>   
+	    
+	    <property name="calle" column="CALLE" type="string" not-null="true" unique="false" length="30" lazy="false" />
+		<property name="numero" column="NUMERO" type="integer" not-null="true" unique="false" lazy="false" />
+	    <property name="poblacion" column="POBLACION" type="string" not-null="true" unique="false" length="30" lazy="false" />
+	    <property name="cp" column="CP" type="integer" not-null="true" unique="false" lazy="false" />
+	    <property name="provincia" column="PROVINCIA" type="string" not-null="true" unique="false" length="30" lazy="false" />
+	     
+    </class>
+</hibernate-mapping>

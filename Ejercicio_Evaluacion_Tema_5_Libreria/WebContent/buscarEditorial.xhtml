@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>Búsqueda por editorial</title>
+</h:head>
+<h:body>
+
+	<h:form id="formEditoriales">
+
+		<h:outputLabel value="#{msg.editorial}" for="selectEditoriales" />
+
+		<h:selectOneMenu id="selectEditoriales" value="#{libreriaBean.idEditorial}">
+		
+			<f:selectItem itemLabel="#{msg.select_editorial}" itemValue="0"/>
+			<f:selectItems value="#{libreriaBean.misEditoriales}" var="e" itemLabel="#{e.nombre}" itemValue="#{e.id}" />
+
+		</h:selectOneMenu>
+		
+		<h:commandButton action="#{libreriaBean.guardarIdEditorial()}" value="Buscar" />
+
+	</h:form>
+	
+	<br></br>
+	<br></br>
+	<br></br>
+	<br></br>
+	
+	<c:if test="#{libreriaBean.idEditorial != 0}">
+		<h:dataTable value="#{libreriaBean.librosPorEditorial()}" var="libro"
+			border="1">
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{msg.title}" />
+				</f:facet>
+				<h:outputText value="#{libro.titulo}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{msg.ISBN}" />
+				</f:facet>
+				<h:outputText value="#{libro.isbn}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{msg.description}" />
+				</f:facet>
+				<h:outputText value="#{libro.descripcion}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{msg.price}" />
+				</f:facet>
+				<h:outputText value="#{libro.precio}" />
+			</h:column>
+		</h:dataTable>
+	</c:if>
+	
+	<br></br>
+	<br></br>
+	
+	<h:form id="enlaces">
+		<h:commandLink action="#{libreriaBean.goToIndex()}">
+	    	<h:outputText value="#{msg.searchAutor}" />
+	    </h:commandLink>
+	    
+	    <br></br><br></br>
+	    
+	    <h:commandLink action="#{libreriaBean.goToTitle()}">
+	    	<h:outputText value="#{msg.searchTitle}" />
+	    </h:commandLink>
+    </h:form>
+
+</h:body>
+</html>

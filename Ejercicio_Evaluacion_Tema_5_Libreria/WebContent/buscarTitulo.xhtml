@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>Búsqueda por título</title>
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<div class="label">
+			<label><h:outputText value="#{msg.auto_title}" /></label>
+		</div>
+
+		<p:autoComplete id="librosAutor" value="#{libreriaBean.miLibro}"
+			completeMethod="#{libreriaBean.librosPorTitulo}" var="lib"
+			itemLabel="#{lib.titulo}" itemValue="#{lib}"
+			converter="tituloConverter" forceSelection="true" size="50">
+		</p:autoComplete>
+
+		<p:commandButton update="tablaLibros" value="#{msg.buscar}" />
+		
+		<br></br>
+		<br></br>
+
+		<p:dataTable id="tablaLibros" var="libro"
+			value="#{libreriaBean.miLibro}">
+			<p:column headerText="#{msg.title}">
+				<h:outputText value="#{libro.titulo}" />
+			</p:column>
+			<p:column headerText="#{msg.ISBN}">
+				<h:outputText value="#{libro.isbn}" />
+			</p:column>
+			<p:column headerText="#{msg.description}">
+				<h:outputText value="#{libro.descripcion}" />
+			</p:column>
+			<p:column headerText="#{msg.price}">
+				<h:outputText value="#{libro.precio}" />
+			</p:column>
+		</p:dataTable>
+
+	</h:form>
+
+	<br></br>
+	<br></br>
+
+	<h:form id="enlaces">
+		<h:commandLink action="#{libreriaBean.goToIndex()}">
+			<h:outputText value="#{msg.searchAutor}" />
+		</h:commandLink>
+
+		<br></br>
+		<br></br>
+
+		<h:commandLink action="#{libreriaBean.goToEditorial()}">
+			<h:outputText value="#{msg.searchEditorial}" />
+		</h:commandLink>
+	</h:form>
+</h:body>
+</html>

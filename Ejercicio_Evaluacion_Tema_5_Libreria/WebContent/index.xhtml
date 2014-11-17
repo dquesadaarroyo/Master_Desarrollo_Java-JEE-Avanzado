@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>Búsqueda por autor</title>
+</h:head>
+<h:body>
+	<h:form id="formAutores">
+		
+		<h:outputLabel value="#{msg.autor} " for="selectAutores" />
+		<h:selectOneMenu id="selectAutores" value="#{libreriaBean.idAutor}">
+			<f:selectItem itemLabel="#{msg.select_autor}" itemValue="0"/>
+			<f:selectItems value="#{libreriaBean.misAutores}" var="a" itemLabel="#{a.nombre}" itemValue="#{a.id}"/>
+		</h:selectOneMenu>
+		<h:commandButton action="#{libreriaBean.guardarIdAutor()}" value="#{msg.buscar}" />
+		
+	</h:form>
+	<br></br><br></br>
+	<c:if test="#{libreriaBean.idAutor != 0}">
+	<h:dataTable value="#{libreriaBean.librosPorAutor()}" var="libro" border="1" >
+		<h:column>
+	 		<f:facet name="header" >
+	 			<h:outputText value="#{msg.title}" />
+	 		</f:facet>
+	 		<h:outputText value="#{libro.titulo}" />
+	 	</h:column>
+	 	<h:column>
+	 		<f:facet name="header" >
+	 			<h:outputText value="#{msg.ISBN}" />
+	 		</f:facet>
+	 		<h:outputText value="#{libro.isbn}" />
+	 	</h:column>
+	 	<h:column>
+	 		<f:facet name="header" >
+	 			<h:outputText value="#{msg.description}" />
+	 		</f:facet>
+	 		<h:outputText value="#{libro.descripcion}" />
+	 	</h:column>
+	 	<h:column>
+	 		<f:facet name="header" >
+	 			<h:outputText value="#{msg.price}" />
+	 		</f:facet>
+	 		<h:outputText value="#{libro.precio}" />
+	 	</h:column>
+ 	</h:dataTable>
+	</c:if>
+	
+	<br></br><br></br>
+	
+	<h:form id="enlaces">
+		<h:commandLink action="#{libreriaBean.goToEditorial()}">
+	    	<h:outputText value="#{msg.searchEditorial}" />
+	    </h:commandLink>
+	    
+	    <br></br><br></br>
+	    
+	    <h:commandLink action="#{libreriaBean.goToTitle()}">
+	    	<h:outputText value="#{msg.searchTitle}" />
+	    </h:commandLink>
+    </h:form>
+    
+</h:body>
+</html>
+
