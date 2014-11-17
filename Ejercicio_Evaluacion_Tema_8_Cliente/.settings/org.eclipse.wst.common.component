@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="Ejercicio_Evaluacion_Tema_8_Cliente">
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="context-root" value="Ejercicio_Evaluacion_Tema_8_Cliente"/>
+        <property name="java-output-path" value="/Ejercicio_Evaluacion_Tema_8_Cliente/bin"/>
+    </wb-module>
+</project-modules>
