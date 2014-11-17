@@ -7,6 +7,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Spring4_release"/>
 	<classpathentry kind="lib" path="/Users/danielquesadaarroyo/Documents/Documentacion MASTER JAVA/Software y Librerias/Librerias Eclipse/Tema 1/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate"/>
-	<classpathentry kind="lib" path="/Users/danielquesadaarroyo/Documents/Documentacion_MASTER_JAVA/Software_y_Librerias/Librerias Eclipse/Tema 1/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
