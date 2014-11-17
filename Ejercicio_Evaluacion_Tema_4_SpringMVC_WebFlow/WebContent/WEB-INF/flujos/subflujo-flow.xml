@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<!-- Recibimos las variables numero2 y operación -->
+	<input name="numero2"/>
+	<input name="operacion"/>
+	
+	<!-- Comprobamos si la operación que vamos a realizar es una división. Si es una división, pasaremos a validar el divisor 
+	     en la action comprobarDivisor. Si la operación no es una división, saldremos del subflow y le daremos un valor false a la 
+	     variable divisor -->
+	<decision-state id="comprobarOper">
+		<if test="calculadoraServices.validaOperacion(operacion)"
+			then="comprobarDivisor" else="finSubflow"/>
+		<on-exit>
+			<set name="flowScope.divisor" value="false" type="boolean" />
+		</on-exit>
+	</decision-state> 
+	
+	<!-- Comprobamos el valor del divisor para saber si vamos a dividir por 0 -->
+	<action-state id="comprobarDivisor">
+		<evaluate expression="calculadoraServices.validaDivisor(numero2)" 
+		          result-type="boolean" result="flowScope.divisor" />
+		<transition to="finSubflow"/>
+	</action-state>
+	
+	<end-state id="finSubflow">
+		<output name="divisor"/>
+	</end-state>
+
+</flow>

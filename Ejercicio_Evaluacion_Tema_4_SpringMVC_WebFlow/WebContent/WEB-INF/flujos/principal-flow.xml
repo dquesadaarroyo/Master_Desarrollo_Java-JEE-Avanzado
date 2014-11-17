@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        				http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+           start-state="validaCalcNum1">
+
+
+	<!-- Accedemos al flow por la jsp inicioCalc.jsp en la que podremos realizar las operaciones matemáticas -->
+	<!--<view-state id="calculadora" view="inicioCalc" >
+		<transition on="toValidaCalc" to="validaCalcNum1" />
+	</view-state>-->
+	
+	<!-- Guardamos el primer número que hemos introducido en el formulario -->
+	<action-state id="validaCalcNum1">
+		<evaluate expression="requestParameters.firstNum" result-type="double" result="flowScope.numero1"/>
+		<transition to="validaCalcNum2"></transition>
+	</action-state>
+	
+	<!-- Guardamos el segundo número que hemos introducido en el formulario -->
+	<action-state id="validaCalcNum2">
+		<evaluate expression="requestParameters.secondNum" result-type="double" result="flowScope.numero2"/>
+		<transition to="validaCalcOper" />
+	</action-state>
+	
+	<!-- Guardamos la operacion que queremos realizar y que hemos introducido en el formulario -->
+	<action-state id="validaCalcOper">
+		<evaluate expression="requestParameters.operacion" result-type="string" result="flowScope.operacion"/>
+		<transition to="ValidacionesSubFlow" />
+	</action-state>
+	
+	<!-- Accedemos al subflow en el que realizaremos las validaciones.
+		 A este subflow le pasamos el segundo numero(numero2) y la operación que vamos a realizar.
+		 Por otra parte, recibiremos la varible divisor que nos indicará si vamos a realizar una división con divisor 0 -->
+	<subflow-state id="ValidacionesSubFlow" subflow="subflujo-flow">
+		<input name="numero2" type="double" value="flowScope.numero2"/>
+		<input name="operacion" type="string" value="flowScope.operacion"/>
+		
+		<output name="divisor" type="boolean"/>
+		
+		<transition to="compruebaDivisor" />
+	</subflow-state>
+	
+	<!-- Si el divisor recibido del subflow es 0, iremos a la página de error. Sino, iremos a la página resultado.jsp con
+		 la que sacaremos el resultado -->
+	<decision-state id="compruebaDivisor">
+		<if test="divisor" then="paginaDivisionErronea" else="resultado"/>
+	</decision-state>
+	
+	<!-- Si estamos realizando una división por 0. Tendremos un link para comenzar el flow de nuevo. -->
+	<view-state id="paginaDivisionErronea" view="divideCero">
+		<transition on="toInicio" to="inicio" />
+	</view-state>
+	
+	<view-state id="inicio" view="inicioCalc" >
+	</view-state>
+	
+	<!-- Si es una operación que se puede realizar, invocamos al método calcular e iremos a la pagina resultado.jsp.
+		Tendremos un link para comenzar el flow de nuevo.-->
+	<action-state id="resultado">
+		<evaluate expression="calculadoraServices.calcular(numero1,numero2,operacion)" result-type="double" result="flowScope.resultado" />
+		<transition to="fin" />
+	</action-state>
+	
+	<!-- Mostramos el resultado de la operación -->
+	<end-state id="fin" view="resultado" />
+	
+</flow>
