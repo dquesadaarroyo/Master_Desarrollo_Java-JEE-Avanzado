@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 20-jul-2014 21:06:03 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="app.modelo.Libro" table="LIBRO">
+        
+	    <id name="id" column="ID_LIBRO" type="long" length="5"> 
+	    	<generator class="native" />
+	    </id>    
+	    
+	    <property name="titulo" column="TITULO" type="string" not-null="true" unique="false" length="30" lazy="false" />
+	    <property name="isbn" column="ISBN" type="string" not-null="true" unique="false" length="30" lazy="false" />
+	    <property name="publicacion" column="PUBLICACION" type="integer" not-null="true" unique="false" lazy="false" />
+	    <property name="precio" column="PRECIO" type="double" not-null="true" unique="false" lazy="false" />
+	    <property name="descripcion" column="DESCRIPCION" type="string" not-null="true" unique="false" length="300" lazy="false" />
+					 
+	 
+       	<set name="autores" table="AUTORES_LIBROS" cascade="all">
+			<key column="ID_LIBRO" />
+			<many-to-many column="ID_AUTOR" class="app.modelo.Autor"/>
+		</set>
+		
+		<many-to-one name="editorial" 
+        			 class="app.modelo.Editorial" 
+        			 column="ID_EDITORIAL" 
+        			 cascade="merge,persist,refresh,save-update" 
+        			 not-null="true" />
+        	
+    </class>
+</hibernate-mapping>
